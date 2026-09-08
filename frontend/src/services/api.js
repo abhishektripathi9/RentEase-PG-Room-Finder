@@ -2,7 +2,7 @@
 
 import { INITIAL_PROPERTIES, INITIAL_BOOKINGS, INITIAL_VISITS } from './mockData';
 
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
 
 // In-Memory state for graceful fallback if Spring Boot is launching or offline
 let localProperties = [...INITIAL_PROPERTIES];
