@@ -96,10 +96,10 @@ export default function Navbar({
         <div className="re-nav-actions">
           {!isOwnerView && (
             <button onClick={onOpenCompare} className="btn-outline" style={{ padding: '6px 14px', fontSize: 12 }}>
-              <Scale style={{ width: 14, height: 14, color: '#00D2FF' }} />
+              <Scale style={{ width: 14, height: 14, color: '#38BDF8' }} />
               <span>Compare</span>
               {compareCount > 0 && (
-                <span style={{ background: '#00D2FF', color: '#030712', fontWeight: 800, fontSize: 10, padding: '1px 6px', borderRadius: 999, marginLeft: 4 }}>
+                <span style={{ background: '#38BDF8', color: '#030712', fontWeight: 800, fontSize: 10, padding: '1px 6px', borderRadius: 999, marginLeft: 4 }}>
                   {compareCount}
                 </span>
               )}

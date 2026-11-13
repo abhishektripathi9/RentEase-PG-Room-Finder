@@ -41,11 +41,11 @@ export default function HeroSection({
 
         {/* Project Title and Description */}
         <h1 className="re-hero-title">
-          RentEase – <span className="re-hero-gradient">PG &amp; Room Finder</span>
+          Find Your Sanctuary. <span className="re-hero-gradient">Handpicked PGs &amp; Managed Co-Living</span>
         </h1>
 
         <p className="re-hero-desc">
-          Comprehensive full-stack PG and rental housing portal with intuitive filter search, booking workflow, verified listings, owner portal, and interactive map interface.
+          Zero brokerage, 100% physically verified properties, biometric security, and homely meals across India's top tech hubs. Built with high-performance Spring Boot and React.
         </p>
 
         {/* Tech Stack Pills matching portfolio card */}

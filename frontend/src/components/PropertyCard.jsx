@@ -34,7 +34,7 @@ export default function PropertyCard({
       case 'BOYS':
         return <span style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#93C5FD', border: '1px solid rgba(59, 130, 246, 0.3)', fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 999 }}>Boys PG</span>;
       default:
-        return <span style={{ background: 'rgba(0, 210, 255, 0.2)', color: '#67E8F9', border: '1px solid rgba(0, 210, 255, 0.3)', fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 999 }}>Unisex / Co-living</span>;
+        return <span style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#93C5FD', border: '1px solid rgba(59, 130, 246, 0.3)', fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 999 }}>Unisex / Co-living</span>;
     }
   };
 
@@ -83,9 +83,9 @@ export default function PropertyCard({
               padding: '4px 10px',
               borderRadius: 999,
               cursor: 'pointer',
-              border: isCompared ? '1px solid #00D2FF' : '1px solid rgba(255,255,255,0.2)',
-              background: isCompared ? '#00D2FF' : 'rgba(0,0,0,0.6)',
-              color: isCompared ? '#030712' : '#FFF',
+              border: isCompared ? '1px solid #3B82F6' : '1px solid rgba(255,255,255,0.2)',
+              background: isCompared ? '#3B82F6' : 'rgba(0,0,0,0.6)',
+              color: isCompared ? '#FFFFFF' : '#FFF',
               display: 'flex',
               alignItems: 'center',
               gap: 4,
@@ -134,7 +134,7 @@ export default function PropertyCard({
       <div className="re-card-body">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 12, color: '#94A3B8', marginBottom: 6 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#00D2FF', fontWeight: 800 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#F59E0B', fontWeight: 800 }}>
               <span>★ {property.rating || '4.8'}</span>
               <span style={{ color: '#64748B', fontWeight: 500 }}>({property.reviewCount || 24})</span>
             </div>
@@ -164,7 +164,7 @@ export default function PropertyCard({
                 Meals
               </span>
             )}
-            <span className="re-amenity-chip" style={{ color: '#67E8F9', borderColor: 'rgba(0, 210, 255, 0.3)' }}>
+            <span className="re-amenity-chip" style={{ color: '#93C5FD', borderColor: 'rgba(59, 130, 246, 0.3)' }}>
               <Wifi style={{ width: 12, height: 12 }} />
               Wi-Fi
             </span>
@@ -189,7 +189,7 @@ export default function PropertyCard({
               type="button"
               onClick={() => onScheduleVisit(property)}
               title="Schedule a Free Visit"
-              style={{ padding: '8px 10px', borderRadius: 10, background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(51, 65, 85, 0.8)', color: '#00D2FF', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              style={{ padding: '8px 10px', borderRadius: 10, background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(51, 65, 85, 0.8)', color: '#38BDF8', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
             >
               <Calendar style={{ width: 16, height: 16 }} />
             </button>
