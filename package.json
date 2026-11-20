@@ -1,0 +1,14 @@
+{
+  "name": "rentease-platform",
+  "version": "1.0.0",
+  "description": "RentEase - Verified PG & Room Finder Full-Stack Monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"API,WEB\" -c \"blue,green\" \"npm --prefix server start\" \"npm --prefix client dev\"",
+    "start": "concurrently -n \"API,WEB\" -c \"blue,green\" \"npm --prefix server start\" \"npm --prefix client dev\"",
+    "init-db": "npm --prefix server run init-db"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

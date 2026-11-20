@@ -1,10 +1,25 @@
-# Node & Frontend
+# Dependencies
+node_modules/
+*/node_modules/
+client/node_modules/
+server/node_modules/
 frontend/node_modules/
-frontend/dist/
-frontend/.vite/
-frontend/npm-debug.log*
 
-# Java & Backend
+# Production Builds
+dist/
+*/dist/
+client/dist/
+frontend/dist/
+.vite/
+*/.vite/
+
+# Environment Variables
+.env
+*.env
+!.env.example
+server/.env
+
+# Java & Spring Boot (Legacy)
 backend/target/
 backend/.maven/
 backend/.mvn/wrapper/maven-wrapper.jar
@@ -27,3 +42,6 @@ Desktop.ini
 
 # Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

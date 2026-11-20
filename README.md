@@ -1,155 +1,181 @@
-# 🏠 RentEase – PG & Room Finder
+# 🏠 RentEase PRO – Zero Brokerage PG & Room Finder Platform
 
-[![Full Stack](https://img.shields.io/badge/Full_Stack-2026_Featured-00D2FF?style=for-the-badge&logo=codeigniter&logoColor=black)](https://github.com)
-[![React.js](https://img.shields.io/badge/React.js-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![Java](https://img.shields.io/badge/Java-21_/_22-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.3-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
-[![REST API](https://img.shields.io/badge/REST_API-OpenAPI_/_Swagger-499D4A?style=for-the-badge&logo=swagger&logoColor=white)](http://localhost:8080/swagger-ui.html)
+[![Full Stack Monorepo](https://img.shields.io/badge/Architecture-Monorepo_Full_Stack-00D2FF?style=for-the-badge&logo=codeigniter&logoColor=black)](https://github.com/abhishektripathi9/RentEase-PG-Room-Finder)
+[![React 19](https://img.shields.io/badge/Frontend-React_19_+_Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Node.js Express](https://img.shields.io/badge/Backend-Node.js_+_Express-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![MySQL 8.0](https://img.shields.io/badge/Database-MySQL_8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![JWT Security](https://img.shields.io/badge/Security-JWT_RBAC_+_Audit_Logs-F58220?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io)
+[![Tailwind CSS](https://img.shields.io/badge/UI_Style-Tailwind_+_Minimalism-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 
-> **Comprehensive full-stack PG and rental housing portal with intuitive filter search, booking workflow, verified listings, owner portal, and interactive map interface.**
-
----
-
-## 🌟 Key Capabilities
-
-### 🔍 1. Intuitive Filter Search
-- **Multi-parameter Filters**:
-  - **Gender / PG Type**: Unisex / Co-living, Boys, Girls
-  - **Room Sharing**: Private Single Room, Twin Sharing, Triple Sharing
-  - **Budget Slider**: Dynamic monthly rent filter (₹4,000 – ₹30,000/mo)
-  - **Amenities Multi-Select**: Wi-Fi, 3 Meals Buffet, AC, Power Backup, Attached Bathroom, Daily Housekeeping, Washing Machine, Biometric Security, Gym
-  - **House Rules**: Curfew-free (No Curfew), Visitors Allowed, Non-Veg Allowed
-  - **Locality Search**: Instant search across tech hubs (Koramangala, HSR Layout, Hinjewadi, Cyber City, Hitec City, Whitefield)
-
-### 🗺️ 2. Interactive Map Interface (Leaflet + OpenStreetMap)
-- Custom neon price pins on map (e.g. `₹12.5k`)
-- Two-way interactive sync: Hovering over a property card highlights its map marker; clicking a map marker scrolls to and highlights the property card
-- Proximity tags showing walking distance to Metro stations, Tech parks, and Universities
-
-### 🛡️ 3. Verified Listings & Room Tours
-- **Physical Inspection & KYC Badges**: 100% physically audited properties with verified landlord credentials
-- **Photo Galleries**: High-res room walkthroughs and amenities
-- **Weekly Meal Menu**: Comprehensive daily schedule (Breakfast, Lunch, Dinner - Veg/Non-Veg)
-- **Verified Resident Reviews**: Category ratings for Cleanliness, Food Quality, Wi-Fi Speed, Security, and Value
-
-### 💳 4. Seamless Booking & Visit Scheduling Workflow
-- **Free Property Visit Scheduling**: Pick visit date, time slot (Morning, Afternoon, Evening), and tour mode (In-Person Walkthrough or Live Video Tour) with instant visit pass
-- **Instant Bed Reservation**: Room selection, tenant KYC details (Aadhar/PAN/Passport), transparent rent breakdown (0% Brokerage guarantee, refundable security deposit), simulated payment (UPI, Card, NetBanking), and instant printable digital confirmation voucher with celebratory confetti
-
-### 🏢 5. Landlord / Owner Management Portal
-- **Real-Time KPI Dashboard**: Total listed properties, occupancy rate (%), active tenants, monthly rent inflow, and pending visit requests
-- **Listing Manager**: View, update, pause, or remove PG listings
-- **4-Step Property Creator Wizard**: Multi-step wizard to list new PGs with coordinates, room sharing prices, amenities, and house rules
-- **Tenant Applications & Visit Queue**: Instant approve/decline actions on incoming inquiries
-- **Tenant Rent Ledger**: Track monthly rent status (Paid, Due, Overdue) with one-click automated reminder triggers
+> **RentEase PRO** is an enterprise-grade full-stack platform built to modernize student and co-living housing discovery across major Indian education and tech hubs (Bangalore, Prayagraj, Delhi NCR, and Banda). Engineered with an **Airbnb-inspired minimalist UI**, **atomic bed reservations**, a dedicated **RentEase PRO Admin Control Panel (`/admin`)**, and an **Owner Security & Access Control Gateway** with persistent audit logging.
 
 ---
 
-## 🛠️ Technology Stack
+## 🌟 Key System Capabilities
 
-| Layer | Technologies Used |
+### 🎨 1. Airbnb-Inspired Clean & Airy Public Storefront (`/`)
+- **Minimalist Aesthetic**: Pure white canvas (`#FFFFFF`), subtle `1px solid #E2E8F0` borders, dark slate typography (`#0F172A`), and clean high-contrast black action buttons.
+- **Single-Row Instant Search**: Filter instantly across target cities (*Civil Lines, Prayagraj; Koramangala, Bangalore; Banda*), room configurations (*Single Studio, Twin Share, Triple Share*), and maximum monthly budget.
+- **Responsive 3-Column PG Grid**: Verified high-resolution room photos, zero-brokerage badges, landmark walking distances, 4-box essential amenity badges (Wi-Fi, 3x Meals, Daily Housekeeping, Biometric entry), and live bed counters.
+- **One-Way Navigation Rule**: Strict security rule ensuring **ZERO links, buttons, or mentions** of `/admin` appear anywhere on the public storefront.
+
+### 🛡️ 2. Owner Admin Security & Access Control Gateway (`/admin/security`)
+- **Granular Access Delegation**: The Owner/Super Admin can delegate role-based managerial privileges to team members by email:
+  - `Can Manage PG Catalog` (approve/reject property submissions)
+  - `Can Manage Bookings` (confirm/cancel token reservations & physical visits)
+  - `Can Manage Users` (suspend/activate student and owner accounts)
+  - `Can Edit Settings` (configure platform token fees and trust banners)
+- **Revoke & Modify Permissions**: Instant permission elevation or one-click access revocation.
+- **Security Audit Trail (`security_audit_logs`)**: Automatically logs every security event with IP address, action type, admin user ID, and timestamp into MySQL for complete compliance.
+
+### ⚙️ 3. RentEase PRO Admin Control Panel (`/admin`)
+- **Executive KPI Dashboard (`/admin/dashboard`)**: Real-time counters for Verified PGs Live, Pending Verification Queue, Total Confirmed Bookings, and Active PG Owners, paired with interactive booking growth charts (Recharts).
+- **PG Verification & Catalog Manager (`/admin/properties`)**: Review student-submitted or owner-submitted PGs with photos, sharing prices, amenities, and host KYC. Approve to instantly publish live on `/` or reject with one click.
+- **Bookings & Physical Visits Monitor (`/admin/bookings`)**: Real-time view of student ₹500 token deposits and scheduled property walkthroughs with status filtering.
+- **User & Host Directory (`/admin/users`)**: Directory of registered students and PG owners with account status toggles (`ACTIVE` / `SUSPENDED`).
+- **One-Click Live Switcher**: Prominent **"View Live Website ↗"** button in the admin top header opening the public platform in a new tab.
+
+### 💳 4. Atomic Bed Booking & Visit Scheduling
+- **Live Inventory Synchronization**: Bed booking executes atomic SQL decrements (`UPDATE properties SET available_beds = available_beds - 1 WHERE id = ? AND available_beds > 0`), completely eliminating double-booking hazards.
+- **Token Advance Reservation (₹500)**: Instant reservation workflow generating a printable **Zero-Brokerage Digital Booking Pass** complete with transaction ID, host contact, and room specifics.
+- **Physical Walkthrough Booking**: Schedule in-person property tours by selecting preferred date and time slot.
+
+---
+
+## 🛠️ Technology Stack & Monorepo Architecture
+
+```
+RentEase – PG & Room Finder/
+├── client/                     # Frontend Application (React 19 + Vite + Tailwind)
+│   ├── src/
+│   │   ├── admin/              # RentEase PRO Admin Control Panel
+│   │   │   ├── AdminLayout.jsx
+│   │   │   ├── AdminLogin.jsx
+│   │   │   ├── DashboardModule.jsx
+│   │   │   ├── PropertiesModule.jsx
+│   │   │   ├── BookingsModule.jsx
+│   │   │   ├── UsersModule.jsx
+│   │   │   ├── SettingsModule.jsx
+│   │   │   └── SecurityModule.jsx # Owner Access Delegation & Audit Logs
+│   │   ├── components/         # Clean UI Components (Navbar, Cards, Modals, Pass)
+│   │   ├── pages/              # Public Pages (Home, PG Details, List PG, My Bookings)
+│   │   ├── App.jsx             # React Router 7 Configuration
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+├── server/                     # Backend API (Node.js + Express + MySQL2 Pool)
+│   ├── database/
+│   │   ├── schema.sql          # MySQL Schema with RBAC & Audit Tables
+│   │   └── seed.sql            # Realistic Seed Data (Prayagraj, Bangalore, Banda, Delhi)
+│   ├── src/
+│   │   ├── config/db.js        # MySQL2 Connection Pool
+│   │   ├── middleware/auth.js  # JWT Auth & Role-Based Access Guards
+│   │   ├── routes/             # REST Endpoints (auth, properties, bookings, admin, security)
+│   │   └── index.js            # Express Application Entry Point
+│   ├── package.json
+│   └── .env.example
+├── package.json                # Root Monorepo Orchestrator (concurrently)
+└── README.md
+```
+
+| Layer | Technologies & Libraries |
 |---|---|
-| **Frontend** | React 19, Vite, Vanilla Modern CSS Design System, Lucide Icons, Leaflet & React-Leaflet, Canvas Confetti |
-| **Backend** | Java 21/22, Spring Boot 3.3.3, Spring Web MVC, Spring Data JPA / Hibernate, Spring Validation, Springdoc OpenAPI / Swagger |
-| **Database** | MySQL 8.0 (Production DDL/DML scripts in `database/`) + Zero-Config Embedded H2 in MySQL Compatibility Mode |
-| **Architecture** | Clean Layered REST Architecture (`controller`, `service`, `repository`, `model`, `config`) |
+| **Frontend** | React 19, Vite, Tailwind CSS, Lucide React, Recharts, Canvas Confetti |
+| **Backend** | Node.js, Express.js 4, MySQL2, JSON Web Tokens (JWT), Bcrypt.js, CORS |
+| **Database** | MySQL 8.0 with InnoDB Relational Foreign Keys & Indices |
+| **Security** | Role-Based Access Control (`student`, `owner`, `admin`), Bcrypt Hashing, Prepared Statements, Security Audit Logging |
 
 ---
 
 ## 🚀 Quick Start Guide
 
-### 1. Launch Frontend (React + Vite)
+### 1. Prerequisites
+- **Node.js** (v18.x or v20.x+)
+- **MySQL Server 8.0** running locally on port `3306`
+
+### 2. Database Initialization
+1. Start your local MySQL service (e.g. `net start MySQL80` on Windows).
+2. Create the database and import schema and seeds:
 ```bash
-# Double-click run-frontend.bat or in terminal:
-cd frontend
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS rentease_pro_db;"
+mysql -u root -p rentease_pro_db < server/database/schema.sql
+mysql -u root -p rentease_pro_db < server/database/seed.sql
+```
+
+### 3. Environment Configuration
+Create a `.env` file in the `/server` directory (or copy from `server/.env.example`):
+```env
+PORT=5000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=YourMySQLPassword
+DB_NAME=rentease_pro_db
+JWT_SECRET=rentease_super_secret_jwt_key_2026
+```
+
+### 4. Install Dependencies & Launch
+From the root directory:
+```bash
+# 1. Install root, server, and client dependencies
+npm install
+cd server && npm install
+cd ../client && npm install
+cd ..
+
+# 2. Run both backend (:5000) and frontend (:5173) with a single command
 npm run dev
 ```
-Open **`http://localhost:5173`** in your browser.
+
+Platform access URLs:
+- **Public Customer Website**: [http://localhost:5173](http://localhost:5173)
+- **RentEase PRO Admin Panel**: [http://localhost:5173/admin/login](http://localhost:5173/admin/login)
+  - *Default Admin Credentials*: `admin@rentease.in` / `Admin@123`
+- **Backend REST API**: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-### 2. Launch Backend (Java + Spring Boot)
+## 📡 REST API Architecture
 
-#### Option A: One-Click Runner (Zero-Config In-Memory DB with MySQL Mode)
-```bash
-# Double-click run-backend.bat or in terminal:
-cd backend
-run.bat
-```
-The backend starts on **`http://localhost:8080`**.
-- **Swagger UI Interactive API Docs**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- **H2 Database Console**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console) (JDBC URL: `jdbc:h2:mem:renteasedb`, User: `sa`, Password: empty)
+### Authentication & Profiles (`/api/auth`)
+- `POST /api/auth/register` – Register tenant (`student`) or PG host (`owner`). Rejects `admin` self-registration.
+- `POST /api/auth/login` – Public login for students and PG owners.
+- `POST /api/auth/admin-login` – Dedicated secure login for administrators and authorized managers.
+- `GET /api/auth/me` – Retrieve current authenticated user profile (`Bearer JWT`).
 
-#### Option B: Running with Standalone MySQL
-1. Initialize the database schema and sample seeds:
-   ```bash
-   mysql -u root -p < database/schema.sql
-   mysql -u root -p rentease_db < database/data.sql
-   ```
-2. Run backend with the MySQL profile:
-   ```bash
-   cd backend
-   run.bat -Dspring-boot.run.profiles=mysql
-   ```
+### Public Catalog & Bookings (`/api`)
+- `GET /api/properties` – Filter active verified listings by city, room type, and budget.
+- `GET /api/properties/:id` – Detailed property view with photos, amenities, and live bed count.
+- `POST /api/bookings` – Reserve a bed with token advance (atomically decrements bed count).
+- `GET /api/bookings/my` – Retrieve logged-in student's booking history and digital passes.
+- `POST /api/owner/properties` – Submit a new PG listing for administrative review (`is_verified = 0`).
 
----
+### Admin Control & Verification (`/api/admin`)
+- `GET /api/admin/stats` – Aggregate analytics (Verified PGs, pending queue, active hosts, revenue).
+- `GET /api/admin/properties` – Fetch full property catalog with approval status filters.
+- `PATCH /api/admin/properties/:id/verify` – Approve (`is_verified = 1`) or reject property.
+- `GET /api/admin/bookings` – Manage all tenant reservations and scheduled property visits.
+- `GET /api/admin/users` – User management and account status toggles (`ACTIVE` / `SUSPENDED`).
 
-## 📡 REST API Documentation (Swagger / OpenAPI)
-
-When the backend is running, explore all endpoints interactively at:
-**`http://localhost:8080/swagger-ui.html`**
-
-Key REST endpoints:
-- `GET /api/properties`: Search & filter PGs by city, gender, price, amenities, keyword
-- `GET /api/properties/{id}`: Detailed property profile with rooms, reviews, and amenities
-- `POST /api/properties`: Create new property listing (Owner portal)
-- `PUT /api/properties/{id}`: Update property details
-- `DELETE /api/properties/{id}`: Delete listing
-- `POST /api/bookings`: Create new room reservation
-- `GET /api/bookings`: List all reservations
-- `PATCH /api/bookings/{id}/status`: Update booking status (`CONFIRMED`, `CANCELLED`)
-- `POST /api/visits`: Schedule a free visit tour
-- `GET /api/visits`: Retrieve scheduled visits
-- `POST /api/properties/{id}/reviews`: Submit a verified tenant review
-- `GET /api/owners/stats`: Retrieve aggregated landlord dashboard metrics
+### Owner Security & Access Control (`/api/admin/security`)
+- `GET /api/admin/security/access-list` – Retrieve all managers with assigned permission matrices.
+- `POST /api/admin/security/grant-access` – Grant manager privileges to an existing or new user.
+- `PATCH /api/admin/security/update-permissions/:id` – Update granular permissions for a manager.
+- `DELETE /api/admin/security/revoke-access/:id` – Revoke administrative privileges.
+- `GET /api/admin/security/audit-logs` – Retrieve immutable security access and audit trail.
 
 ---
 
-## 📁 Repository Structure
+## 🔒 Security Best Practices Implemented
+1. **Zero-Trust Access Control**: Public registration strictly restricts accounts to `student` or `owner` roles. Admin privileges cannot be self-assigned.
+2. **One-Way Navigation Rule**: Zero references to `/admin` in the public DOM, headers, or footers, preventing discovery via public web scraping.
+3. **Prepared Statements**: All MySQL queries utilize parameterized inputs via `mysql2/promise` to prevent SQL Injection.
+4. **Bcrypt Hashing**: Passwords stored using industry-standard salt rounds.
+5. **Atomic DB Transactions**: Bed bookings execute atomic condition updates preventing concurrency race conditions.
+6. **Immutable Audit Trail**: Security actions are recorded in `security_audit_logs` with admin identity and network IP.
 
-```
-RentEase – PG & Room Finder/
-├── backend/
-│   ├── src/main/java/com/rentease/
-│   │   ├── RentEaseApplication.java
-│   │   ├── config/              # CORS, OpenAPI Swagger, DataInitializer
-│   │   ├── controller/          # REST Controllers
-│   │   ├── model/               # JPA Entities: Property, RoomType, Booking, Visit, Review, Owner
-│   │   ├── repository/         # Spring Data JPA Repositories
-│   │   └── service/            # Business Logic & Workflow Services
-│   ├── src/main/resources/
-│   │   ├── application.properties        # Default H2 MySQL-mode config
-│   │   └── application-mysql.properties  # Standalone MySQL profile
-│   ├── pom.xml
-│   ├── run.bat / run.ps1
-│   └── .maven/                 # Embedded portable Maven 3.9.6
-├── frontend/
-│   ├── src/
-│   │   ├── components/         # Navbar, HeroSection, FilterSidebar, PropertyCard, InteractiveMap,
-│   │   │                       # QuickViewModal, PropertyDetailsModal, BookingModal, ScheduleVisitModal,
-│   │   │                       # CompareModal, OwnerDashboard, AddPropertyModal, MyBookingsModal, Toast
-│   │   ├── services/           # api.js client & mockData.js
-│   │   ├── App.jsx
-│   │   ├── index.css           # Modern Cyber Glow Design System
-│   │   └── main.jsx
-│   ├── index.html
-│   └── package.json
-├── database/
-│   ├── schema.sql              # MySQL DDL table definitions & indexes
-│   ├── data.sql                # Verified PG seed records
-│   └── README.md
-├── run-backend.bat
-├── run-frontend.bat
-└── README.md
-```
+---
+
+## 👨‍💻 Author & License
+- **Lead Full-Stack Developer**: Abhishek Tripathi ([GitHub Profile](https://github.com/abhishektripathi9))
+- **Portfolio**: [Abhishek Tripathi Portfolio](https://github.com/abhishektripathi9/Abhishek_Portfolio)
+- **License**: MIT License

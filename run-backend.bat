@@ -1,3 +1,4 @@
 @echo off
-cd "%~dp0backend"
-call run.bat %*
+title RentEase PRO - Express & MySQL Backend
+cd /d "%~dp0server"
+npm start
