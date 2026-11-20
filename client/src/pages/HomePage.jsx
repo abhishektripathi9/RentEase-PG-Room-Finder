@@ -4,20 +4,21 @@ import {
   Search,
   MapPin,
   Building2,
+  DollarSign,
   Heart,
   Star,
-  CheckCircle2,
-  ShieldCheck,
   Zap,
-  ArrowRight,
-  Sparkles,
   Wifi,
   Utensils,
-  BatteryCharging,
-  SlidersHorizontal,
-  X,
-  Phone,
-  Check
+  Sparkles,
+  ShieldCheck,
+  Map as MapIcon,
+  CheckCircle2,
+  ArrowRight,
+  UserCheck,
+  Clock,
+  ExternalLink,
+  SlidersHorizontal
 } from 'lucide-react';
 import { api } from '../services/api';
 import MapModal from '../components/MapModal';
@@ -37,13 +38,6 @@ export default function HomePage() {
   const [wishlistIds, setWishlistIds] = useState([]);
   const [mapOpen, setMapOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-
-  // Modals
-  const [selectedPg, setSelectedPg] = useState(null);
-  const [bookingModalPg, setBookingModalPg] = useState(null);
-  const [bookingSuccess, setBookingSuccess] = useState(null);
-  const [visitModalPg, setVisitModalPg] = useState(null);
-  const [visitSuccess, setVisitSuccess] = useState(null);
 
   const showToast = (msg) => {
     setToastMessage(msg);
@@ -70,6 +64,7 @@ export default function HomePage() {
 
   useEffect(() => {
     loadProperties();
+    // Load local saved IDs
     try {
       const saved = JSON.parse(localStorage.getItem('rentease_saved_pgs') || '[]');
       setWishlistIds(saved);
@@ -94,537 +89,446 @@ export default function HomePage() {
     }
   };
 
-  const handleInstantBook = async (pg, room) => {
-    try {
-      const res = await api.bookBed({
-        propertyId: pg.id,
-        roomType: room || pg.sharing_type || 'Single AC Room',
-        tokenAmount: 500
-      });
-      setBookingSuccess(res);
-      // decrement local available beds
-      setProperties(properties.map(p => p.id === pg.id ? { ...p, available_beds: Math.max(0, p.available_beds - 1) } : p));
-      showToast('Bed Reserved! Zero-Brokerage Digital Pass Ready.');
-    } catch (err) {
-      showToast('Reservation simulated successfully!');
-    }
-  };
-
   const categoryPills = [
     { id: 'ALL', label: 'All PGs' },
     { id: 'Unisex', label: 'Student Hubs' },
     { id: 'Boys', label: 'Techie Stays' },
     { id: 'Girls', label: 'Girls Exclusive' },
-    { id: 'Co-Living', label: 'Co-Living' }
+    { id: 'Unisex', label: 'Co-Living' }
   ];
 
   return (
-    <div className="min-h-screen bg-white font-body text-slate-900 pb-20 md:pb-12">
+    <div className="min-h-screen bg-[#F8FAFC] font-body text-slate-800 pb-20 md:pb-12">
       
       {/* Toast Alert */}
       {toastMessage && (
-        <div className="fixed top-20 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 text-xs font-semibold animate-fade-in border border-slate-700">
-          <Sparkles size={15} className="text-emerald-400" />
+        <div className="fixed top-24 right-5 z-50 bg-[#071917] text-white border border-emerald-500/50 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs font-bold animate-fade-in">
+          <Sparkles size={16} className="text-[#10B981]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* ========================================================
-          1. AIRBNB-INSPIRED MINIMALIST CENTERED HERO
+          1. HERO SECTION (Deep Forest-Slate #071917)
           ======================================================== */}
-      <section className="bg-white pt-12 pb-8 px-4 sm:px-6 lg:px-8 border-b border-slate-100 text-center">
-        <div className="max-w-4xl mx-auto">
+      <section className="relative bg-[#071917] text-white pt-16 pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden border-b border-emerald-950">
+        
+        {/* Ambient Gradient Glows */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-10 left-1/3 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto text-center relative z-10">
           
-          {/* Subtle Verified Pill */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold mb-4">
-            <CheckCircle2 size={13} className="text-emerald-600" />
-            <span>100% Verified Campus PGs &amp; Direct Owners</span>
+          {/* Top Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-6 tracking-wide shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <Zap size={14} className="text-[#10B981] fill-[#10B981]" />
+            <span>India's #1 Zero Brokerage PG &amp; Co-Living Network</span>
           </div>
 
-          {/* Simple Bold Title */}
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-3">
-            Find verified PG rooms near your campus.
+          {/* Two-Tone Bold Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight leading-none mb-6">
+            Find Your Space. <span className="text-[#10B981] inline-block">Live Without Friction.</span>
           </h1>
 
-          {/* Simple Subtitle */}
-          <p className="text-sm sm:text-base text-slate-500 max-w-xl mx-auto mb-8 font-normal">
-            Direct owner listings, zero brokerage fees, and physically audited student co-living across Prayagraj, Bangalore, Delhi NCR &amp; Banda.
+          <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-300 font-medium leading-relaxed mb-8">
+            Curated student residences and tech-professional co-living across Bangalore, Prayagraj, Delhi NCR, and Banda. 
+            0% brokerage, 48hr deposit returns, and instant digital bed reservation.
           </p>
 
-          {/* ========================================================
-              2. SINGLE-ROW CLEAN SEARCH BAR
-              ======================================================== */}
-          <form
-            onSubmit={handleSearchSubmit}
-            className="bg-white border border-slate-200 rounded-full p-2 shadow-sm hover:shadow-md transition-shadow max-w-3xl mx-auto text-left"
-          >
-            <div className="flex flex-col sm:flex-row items-center divide-y sm:divide-y-0 sm:divide-x divide-slate-100 gap-1 sm:gap-0">
-              
-              {/* City / Area */}
-              <div className="flex-1 w-full px-5 py-1.5">
-                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                  City / Area
-                </label>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <MapPin size={13} className="text-slate-400 shrink-0" />
-                  <input
-                    type="text"
-                    placeholder="Civil Lines, Koramangala..."
-                    value={targetLocation}
-                    onChange={(e) => setTargetLocation(e.target.value)}
-                    className="w-full text-xs font-semibold text-slate-800 placeholder-slate-400 bg-transparent focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Room Type */}
-              <div className="w-full sm:w-44 px-4 py-1.5">
-                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                  Room Type
-                </label>
-                <select
-                  value={roomType}
-                  onChange={(e) => setRoomType(e.target.value)}
-                  className="w-full text-xs font-semibold text-slate-800 bg-transparent focus:outline-none cursor-pointer mt-0.5"
-                >
-                  <option value="ALL">All Sharing</option>
-                  <option value="Single">Single Room</option>
-                  <option value="Twin">Twin Sharing</option>
-                  <option value="Triple">Triple Sharing</option>
-                </select>
-              </div>
-
-              {/* Max Rent */}
-              <div className="w-full sm:w-40 px-4 py-1.5">
-                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                  Max Rent
-                </label>
-                <select
-                  value={maxBudget}
-                  onChange={(e) => setMaxBudget(Number(e.target.value))}
-                  className="w-full text-xs font-semibold text-slate-800 bg-transparent focus:outline-none cursor-pointer mt-0.5"
-                >
-                  <option value={25000}>Any Budget</option>
-                  <option value={8000}>Up to ₹8,000</option>
-                  <option value={12000}>Up to ₹12,000</option>
-                  <option value={18000}>Up to ₹18,000</option>
-                </select>
-              </div>
-
-              {/* Black Search Button */}
-              <div className="p-1 w-full sm:w-auto">
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto bg-slate-900 hover:bg-black text-white px-6 py-2.5 rounded-full font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm active:scale-95"
-                >
-                  <Search size={13} />
-                  <span>Search</span>
-                </button>
-              </div>
-
+          {/* 3 Trust Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-bold text-slate-300">
+            <div className="flex items-center gap-2 bg-slate-900/60 px-3.5 py-1.5 rounded-full border border-emerald-900/40">
+              <CheckCircle2 size={16} className="text-[#10B981]" />
+              <span>100% Verified Inspection</span>
             </div>
-          </form>
-
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
-            {categoryPills.map((pill) => (
-              <button
-                key={pill.id}
-                onClick={() => setActiveCategory(pill.id)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  activeCategory === pill.id
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
-                }`}
-              >
-                {pill.label}
-              </button>
-            ))}
+            <div className="flex items-center gap-2 bg-slate-900/60 px-3.5 py-1.5 rounded-full border border-emerald-900/40">
+              <ShieldCheck size={16} className="text-[#10B981]" />
+              <span>Direct Owners (No Agents)</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-900/60 px-3.5 py-1.5 rounded-full border border-emerald-900/40">
+              <Zap size={16} className="text-[#10B981]" />
+              <span>Instant Move-In Guarantee</span>
+            </div>
           </div>
 
         </div>
+
       </section>
 
       {/* ========================================================
-          3. CLEAN 3-COLUMN MINIMALIST PG GRID
+          2. FLOATING SEARCH CARD (Overlapping Card)
           ======================================================== */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        
-        {/* Results Header */}
-        <div className="flex items-center justify-between mb-6 pb-2 border-b border-slate-100">
-          <div>
-            <h2 className="text-lg font-black text-slate-900 tracking-tight">
-              Available Verified Rooms
-            </h2>
-            <p className="text-xs text-slate-500">
-              {properties.length} properties matching your criteria
-            </p>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-14 relative z-20">
+        <form
+          onSubmit={handleSearchSubmit}
+          className="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-7 space-y-4"
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            
+            {/* Target Location */}
+            <div>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                Target Location / Hub
+              </label>
+              <div className="relative">
+                <MapPin size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="e.g. Koramangala, UIT Prayagraj..."
+                  value={targetLocation}
+                  onChange={(e) => setTargetLocation(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3 py-2.5 text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Room Type */}
+            <div>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                Room Sharing Type
+              </label>
+              <div className="relative">
+                <Building2 size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <select
+                  value={roomType}
+                  onChange={(e) => setRoomType(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all cursor-pointer"
+                >
+                  <option value="ALL">All Sharing Types</option>
+                  <option value="Single">Single Private Studio</option>
+                  <option value="Twin">Twin Sharing Room</option>
+                  <option value="Triple">Triple Sharing Room</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Max Budget */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+                  Max Monthly Budget
+                </label>
+                <span className="text-xs font-extrabold text-emerald-600 tabular-nums font-mono">
+                  ₹{maxBudget.toLocaleString()} /mo
+                </span>
+              </div>
+              <input
+                type="range"
+                min={4000}
+                max={25000}
+                step={500}
+                value={maxBudget}
+                onChange={(e) => setMaxBudget(parseInt(e.target.value, 10))}
+                className="w-full accent-emerald-500 cursor-pointer h-2 bg-slate-100 rounded-lg"
+              />
+              <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>₹4,000</span>
+                <span>₹15,000</span>
+                <span>₹25,000+</span>
+              </div>
+            </div>
+
           </div>
+
+          {/* Full-Width Vibrant Emerald CTA Button */}
+          <button
+            type="submit"
+            className="w-full py-3.5 px-6 rounded-2xl bg-[#10B981] hover:bg-emerald-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(16,185,129,0.35)] transition-all cursor-pointer font-heading"
+          >
+            <Search size={18} strokeWidth={2.5} />
+            <span>Find My PG ({properties.length} Verified Available)</span>
+            <ArrowRight size={16} />
+          </button>
+        </form>
+      </div>
+
+      {/* ========================================================
+          3. EXPLORE CATEGORIES & VIEW MAP BAR
+          ======================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          
+          {/* Horizontal Category Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+            {categoryPills.map((cat, idx) => {
+              const isActive = activeCategory === cat.id && (idx === 0 || activeCategory !== 'ALL');
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#0F172A] text-white shadow-sm'
+                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* "View Map" Toggle Button */}
           <button
             onClick={() => setMapOpen(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-slate-900 border border-slate-200 rounded-xl px-3 py-1.5 bg-white hover:bg-slate-50 transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-xs font-bold text-slate-800 hover:bg-slate-50 shadow-xs transition-all cursor-pointer self-start sm:self-auto"
           >
-            <MapPin size={13} className="text-slate-600" />
-            <span>View Map</span>
+            <MapIcon size={15} className="text-emerald-600" />
+            <span>View Interactive Map</span>
           </button>
+
+        </div>
+      </div>
+
+      {/* ========================================================
+          4. AVAILABLE NEAR YOU GRID
+          ======================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black font-heading text-slate-900 tracking-tight">
+              Available Near You
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Physically verified rooms with live bed inventory &amp; 0% brokerage guarantee
+            </p>
+          </div>
+          <span className="text-xs font-bold text-slate-500 tabular-nums">
+            Showing {properties.length} listings
+          </span>
         </div>
 
-        {/* Loading Spinner */}
-        {loading && (
-          <div className="py-24 text-center">
-            <div className="w-8 h-8 border-2 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-xs font-semibold text-slate-500">Finding verified PGs...</p>
-          </div>
-        )}
-
-        {/* Property Grid */}
-        {!loading && (
+        {/* Loading Skeleton */}
+        {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {properties.map((pg) => {
-              const isWishlisted = wishlistIds.includes(pg.id);
-              const fallbackImage = 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80';
-              const displayImage = pg.image_url || fallbackImage;
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="bg-white rounded-3xl border border-slate-200 h-96 animate-pulse" />
+            ))}
+          </div>
+        ) : properties.length === 0 ? (
+          <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center">
+            <Building2 size={40} className="mx-auto text-slate-300 mb-3" />
+            <h3 className="text-base font-bold text-slate-800 font-heading">No listings match your search</h3>
+            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+              Try adjusting your locality, room sharing type, or monthly budget range.
+            </p>
+            <button
+              onClick={() => {
+                setTargetLocation('');
+                setRoomType('ALL');
+                setMaxBudget(25000);
+                setActiveCategory('ALL');
+              }}
+              className="mt-4 px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs"
+            >
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {properties.map((prop) => {
+              const isWish = wishlistIds.includes(prop.id);
+              const firstImage = prop.images && prop.images[0]
+                ? prop.images[0]
+                : 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80';
+              const originalRent = Math.round(prop.price_starting * 1.2);
 
               return (
                 <div
-                  key={pg.id}
-                  className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-200 group flex flex-col justify-between"
+                  key={prop.id}
+                  onClick={() => navigate(`/pg/${prop.id}`)}
+                  className="bg-white rounded-3xl border border-[#E2E8F0] overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group cursor-pointer"
                 >
-                  <div>
-                    {/* Room Photo Container */}
-                    <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
-                      <img
-                        src={displayImage}
-                        alt={pg.name}
-                        onError={(e) => { e.target.src = fallbackImage; }}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                      
-                      {/* Subtle White Verified Pill */}
-                      <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-slate-900 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-200 shadow-sm flex items-center gap-1">
-                        <CheckCircle2 size={11} className="text-emerald-600" />
-                        <span>Verified</span>
+                  
+                  {/* Top Image Container */}
+                  <div className="relative h-56 bg-slate-950 overflow-hidden">
+                    <img
+                      src={firstImage}
+                      alt={prop.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/30 pointer-events-none" />
+
+                    {/* Top-Left: Zero Brokerage & Category Pills */}
+                    <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500 text-slate-950 flex items-center gap-1 shadow-md">
+                        ✓ Zero Brokerage
                       </span>
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-900/80 backdrop-blur-xs text-white border border-white/20">
+                        {prop.category}
+                      </span>
+                    </div>
 
-                      {/* Wishlist Heart Button */}
-                      <button
-                        onClick={(e) => handleToggleWishlist(pg.id, e)}
-                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-slate-700 hover:text-rose-600 transition-colors shadow-sm"
-                        aria-label="Save to Wishlist"
-                      >
-                        <Heart
-                          size={15}
-                          className={isWishlisted ? 'text-rose-500 fill-rose-500' : ''}
-                        />
-                      </button>
+                    {/* Top-Right: Star Rating Badge */}
+                    <div className="absolute top-3.5 right-3.5 bg-slate-900/85 backdrop-blur-xs text-white px-2.5 py-1 rounded-full text-xs font-extrabold flex items-center gap-1 border border-white/10 shadow-sm">
+                      <Star size={12} className="text-amber-400 fill-amber-400" />
+                      <span>{prop.rating || '4.9'}</span>
+                      <span className="text-slate-400 text-[10px]">({prop.reviews_count || 128})</span>
+                    </div>
 
-                      {/* Bed Counter Pill */}
-                      <div className="absolute bottom-3 left-3 bg-slate-900/85 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1">
-                        <Zap size={10} className="text-emerald-400" />
-                        <span>{pg.available_beds > 0 ? `${pg.available_beds} Beds Left` : 'Sold Out'}</span>
+                    {/* Bottom-Left: Amber/Green Availability Pill */}
+                    <div className="absolute bottom-3.5 left-3.5">
+                      <span className={`px-2.5 py-1 rounded-full text-[11px] font-black flex items-center gap-1 backdrop-blur-xs shadow-md ${
+                        prop.available_beds <= 2
+                          ? 'bg-amber-500 text-slate-950 animate-pulse'
+                          : 'bg-emerald-950/90 text-emerald-300 border border-emerald-500/30'
+                      }`}>
+                        <Zap size={12} className="fill-current" />
+                        <span>
+                          {prop.available_beds <= 2
+                            ? `Only ${prop.available_beds} Beds Left`
+                            : `${prop.available_beds} Beds Available`}
+                        </span>
+                      </span>
+                    </div>
+
+                    {/* Bottom-Right: Heart Wishlist Toggle Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => handleToggleWishlist(prop.id, e)}
+                      className={`absolute bottom-3.5 right-3.5 w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-md ${
+                        isWish ? 'bg-rose-500 text-white' : 'bg-white/90 backdrop-blur-xs text-slate-700 hover:text-rose-500'
+                      }`}
+                      title={isWish ? 'Remove from Saved' : 'Save Property'}
+                    >
+                      <Heart size={16} className={isWish ? 'fill-white' : ''} />
+                    </button>
+
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    
+                    <div>
+                      {/* Title + Room Badge */}
+                      <div className="flex items-start justify-between gap-2 mb-1.5">
+                        <h3 className="font-heading font-extrabold text-base text-slate-900 line-clamp-1 group-hover:text-emerald-600 transition-colors">
+                          {prop.title}
+                        </h3>
+                        <span className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 shrink-0">
+                          {prop.room_types && prop.room_types[0] ? prop.room_types[0].type.split(' ')[0] : 'STUDIO'}
+                        </span>
+                      </div>
+
+                      {/* Landmark Proximity */}
+                      <div className="flex items-center gap-1 text-xs text-slate-500 mb-2.5">
+                        <MapPin size={13} className="text-emerald-600 shrink-0" />
+                        <span className="truncate">
+                          {prop.landmark_distance || `${prop.locality}, ${prop.city}`}
+                        </span>
+                      </div>
+
+                      {/* Room Highlight Pills */}
+                      <div className="flex flex-wrap gap-1.5 mb-3.5">
+                        <span className="text-[10px] font-bold bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-md border border-emerald-100">
+                          Single / Twin Share
+                        </span>
+                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">
+                          Private Attached Bath
+                        </span>
+                      </div>
+
+                      {/* 4-Box Amenity Grid */}
+                      <div className="grid grid-cols-4 gap-2 py-2.5 px-3 bg-slate-50 rounded-2xl border border-slate-100 mb-4 text-center">
+                        <div className="flex flex-col items-center">
+                          <Wifi size={14} className="text-emerald-600 mb-0.5" />
+                          <span className="text-[9px] font-bold text-slate-600">Fast Wi-Fi</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <Utensils size={14} className="text-emerald-600 mb-0.5" />
+                          <span className="text-[9px] font-bold text-slate-600">3x Meals</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <Sparkles size={14} className="text-emerald-600 mb-0.5" />
+                          <span className="text-[9px] font-bold text-slate-600">Cleaning</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <ShieldCheck size={14} className="text-emerald-600 mb-0.5" />
+                          <span className="text-[9px] font-bold text-slate-600">Biometric</span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Card Content */}
-                    <div className="p-4">
-                      {/* Title & Locality */}
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <h3 className="font-bold text-sm text-slate-900 group-hover:text-black line-clamp-1">
-                          {pg.name}
-                        </h3>
-                        <div className="flex items-center gap-1 text-[11px] font-bold text-slate-700 shrink-0">
-                          <Star size={12} className="text-amber-500 fill-amber-500" />
-                          <span>{pg.rating || '4.8'}</span>
+                    {/* Price & Action Row */}
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <div>
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="text-lg font-black font-heading text-slate-900 tabular-nums">
+                            ₹{prop.price_starting.toLocaleString()}
+                          </span>
+                          <span className="text-xs text-slate-400 line-through tabular-nums">
+                            ₹{originalRent.toLocaleString()}
+                          </span>
+                          <span className="text-[11px] font-semibold text-slate-500">/mo</span>
+                        </div>
+                        <div className="text-[10px] font-bold text-emerald-600">
+                          ✓ Zero Security Lock-in
                         </div>
                       </div>
 
-                      <p className="text-xs text-slate-500 mb-2.5 flex items-center gap-1">
-                        <MapPin size={12} className="text-slate-400 shrink-0" />
-                        <span className="truncate">{pg.locality || pg.address || 'Civil Lines'}, {pg.city}</span>
-                      </p>
-
-                      {/* Simple Amenities Line */}
-                      <p className="text-[11px] text-slate-600 mb-3 line-clamp-1">
-                        Wi-Fi • Food Included • Power Backup • {pg.sharing_type || 'Twin Share'}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Card Bottom Row: Price & Action */}
-                  <div className="px-4 pb-4 pt-2 border-t border-slate-100 flex items-center justify-between">
-                    <div>
-                      <span className="text-base font-black text-slate-900">
-                        ₹{(pg.price_monthly || 6500).toLocaleString('en-IN')}
+                      {/* Black "View & Book →" Pill Button */}
+                      <span className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-900 group-hover:bg-[#10B981] text-white group-hover:text-slate-950 font-extrabold text-xs shadow-xs transition-colors">
+                        <span>View &amp; Book</span>
+                        <ArrowRight size={13} />
                       </span>
-                      <span className="text-[11px] text-slate-400 font-normal"> /month</span>
                     </div>
 
-                    <button
-                      onClick={() => setSelectedPg(pg)}
-                      className="px-3.5 py-1.5 rounded-xl border border-slate-300 hover:border-slate-900 text-slate-800 hover:text-black text-xs font-bold transition-all bg-white hover:bg-slate-50 cursor-pointer"
-                    >
-                      View Details
-                    </button>
                   </div>
+
                 </div>
               );
             })}
           </div>
         )}
 
-      </main>
+      </div>
 
       {/* ========================================================
-          4. MINIMALIST TRUST BANNER
+          5. RENTEASE TRUST PROMISE FOOTER BANNER
           ======================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-10">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center sm:text-left">
-            <div className="flex items-start gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0">
-                <ShieldCheck size={20} />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-slate-900 mb-1">0% Brokerage Guarantee</h4>
-                <p className="text-xs text-slate-500">Direct agreement between student and host without any middleman commission.</p>
-              </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div className="bg-[#071917] rounded-3xl p-8 sm:p-12 text-white border border-emerald-950 relative overflow-hidden">
+          
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold mb-4">
+              <ShieldCheck size={14} />
+              <span>RentEase PRO Zero-Brokerage Charter</span>
             </div>
-            <div className="flex items-start gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0">
-                <CheckCircle2 size={20} />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-slate-900 mb-1">Physically Verified Rooms</h4>
-                <p className="text-xs text-slate-500">Every room is audited for Wi-Fi speed, security, cleanliness, and food quality.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0">
-                <Zap size={20} />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-slate-900 mb-1">Instant Move-In</h4>
-                <p className="text-xs text-slate-500">Hold your bed with a ₹500 token deposit and receive your instant digital booking pass.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================
-          5. PROPERTY DETAILS MODAL
-          ======================================================== */}
-      {selectedPg && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-slate-200">
             
-            <button
-              onClick={() => setSelectedPg(null)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-800 rounded-full hover:bg-slate-100 transition-colors"
-            >
-              <X size={20} />
-            </button>
-
-            {/* Room Image */}
-            <div className="aspect-video w-full rounded-2xl overflow-hidden mb-5 bg-slate-100">
-              <img
-                src={selectedPg.image_url || 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80'}
-                alt={selectedPg.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Header info */}
-            <div className="flex items-start justify-between gap-4 mb-3">
-              <div>
-                <span className="inline-block text-[10px] uppercase font-bold tracking-wider bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full mb-1 border border-slate-200">
-                  {selectedPg.category || 'Student Co-Living'}
-                </span>
-                <h2 className="text-xl font-black text-slate-900">{selectedPg.name}</h2>
-                <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                  <MapPin size={13} className="text-slate-400" />
-                  <span>{selectedPg.address || selectedPg.locality}, {selectedPg.city}</span>
-                </p>
-              </div>
-
-              <div className="text-right">
-                <span className="text-2xl font-black text-slate-900">
-                  ₹{(selectedPg.price_monthly || 6500).toLocaleString('en-IN')}
-                </span>
-                <span className="text-xs text-slate-400 block font-normal">per month</span>
-              </div>
-            </div>
-
-            {/* Highlights */}
-            <div className="grid grid-cols-3 gap-2 my-4 text-center">
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[10px] text-slate-400 block font-medium">Beds Available</span>
-                <span className="text-xs font-bold text-slate-800">{selectedPg.available_beds} beds left</span>
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[10px] text-slate-400 block font-medium">Sharing Type</span>
-                <span className="text-xs font-bold text-slate-800">{selectedPg.sharing_type || 'Twin'}</span>
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[10px] text-slate-400 block font-medium">Food Plan</span>
-                <span className="text-xs font-bold text-slate-800">3x Meals / Day</span>
-              </div>
-            </div>
-
-            {/* Amenities list */}
-            <div className="mb-6">
-              <h4 className="text-xs font-bold uppercase text-slate-400 tracking-wider mb-2">Amenities Included</h4>
-              <div className="flex flex-wrap gap-2">
-                {['High-Speed Wi-Fi', '3x Meals Buffet', 'RO Purifier', '24/7 Power Backup', 'Daily Housekeeping', 'Biometric Lock'].map((amenity, i) => (
-                  <span key={i} className="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg border border-slate-200">
-                    ✓ {amenity}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex items-center gap-3 pt-3 border-t border-slate-100">
-              <button
-                onClick={() => {
-                  const pg = selectedPg;
-                  setSelectedPg(null);
-                  setVisitModalPg(pg);
-                }}
-                className="flex-1 py-3 rounded-xl border border-slate-300 hover:border-slate-800 text-slate-800 font-bold text-xs transition-colors"
-              >
-                Schedule Free Visit
-              </button>
-              <button
-                onClick={() => {
-                  const pg = selectedPg;
-                  setSelectedPg(null);
-                  handleInstantBook(pg);
-                }}
-                className="flex-1 py-3 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5"
-              >
-                <span>Book Bed (₹500 Token)</span>
-                <ArrowRight size={14} />
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================
-          6. INSTANT BOOKING PASS MODAL
-          ======================================================== */}
-      {bookingSuccess && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl text-center border border-slate-200 animate-fade-in">
-            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Check size={24} />
-            </div>
-            <h3 className="text-xl font-black text-slate-900 mb-1">Bed Reserved Successfully!</h3>
-            <p className="text-xs text-slate-500 mb-4">
-              Your token deposit of ₹500 has been held. Show this pass to your host on arrival.
+            <h2 className="text-2xl sm:text-3xl font-black font-heading tracking-tight mb-4 text-white">
+              Direct host interaction without middlemen. Guaranteed.
+            </h2>
+            
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+              Every property listed on RentEase PRO undergoes stringent physical audit, biometric check verification, and landlord KYC. 
+              Hold your room with just ₹500 token advance—and if your room isn't ready as promised, your deposit is returned within 48 hours or RentEase pays.
             </p>
 
-            {/* Pass details */}
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left space-y-2 mb-5 text-xs">
-              <div className="flex justify-between border-b border-slate-200 pb-2">
-                <span className="text-slate-400">Pass ID</span>
-                <span className="font-mono font-bold text-slate-900">RE-{Date.now().toString().slice(-6)}</span>
-              </div>
-              <div className="flex justify-between border-b border-slate-200 pb-2">
-                <span className="text-slate-400">Property</span>
-                <span className="font-bold text-slate-900">{bookingSuccess.booking?.propertyName || 'Verified PG'}</span>
-              </div>
-              <div className="flex justify-between border-b border-slate-200 pb-2">
-                <span className="text-slate-400">Hold Amount</span>
-                <span className="font-bold text-emerald-600">₹500.00 (Adjustable in Rent)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400">Zero Brokerage Guarantee</span>
-                <span className="font-bold text-slate-900">100% Free</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setBookingSuccess(null)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50"
-              >
-                Close
-              </button>
-              <button
-                onClick={() => {
-                  setBookingSuccess(null);
-                  navigate('/bookings');
-                }}
-                className="flex-1 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-black"
-              >
-                View in My Bookings
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Free Visit Scheduling Modal */}
-      {visitModalPg && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
-            <h3 className="text-lg font-black text-slate-900 mb-1">Schedule Free Visit</h3>
-            <p className="text-xs text-slate-500 mb-4">Visit {visitModalPg.name} in person before booking.</p>
-            
-            <div className="space-y-3 mb-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-emerald-950/80 text-xs font-bold text-slate-300">
               <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Preferred Date</label>
-                <input
-                  type="date"
-                  defaultValue={new Date().toISOString().split('T')[0]}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800"
-                />
+                <span className="text-emerald-400 font-extrabold block text-lg font-heading">0%</span>
+                Brokerage or Service Fee
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Preferred Time Slot</label>
-                <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800">
-                  <option>Morning (10:00 AM – 1:00 PM)</option>
-                  <option>Afternoon (2:00 PM – 5:00 PM)</option>
-                  <option>Evening (5:00 PM – 8:00 PM)</option>
-                </select>
+                <span className="text-emerald-400 font-extrabold block text-lg font-heading">48 Hrs</span>
+                Deposit Return Guarantee
+              </div>
+              <div>
+                <span className="text-emerald-400 font-extrabold block text-lg font-heading">100%</span>
+                Live Bed Inventory Lock
               </div>
             </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setVisitModalPg(null)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-bold"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  setVisitModalPg(null);
-                  showToast('Visit scheduled! The host will contact you shortly.');
-                }}
-                className="flex-1 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-black"
-              >
-                Confirm Visit
-              </button>
-            </div>
           </div>
+
         </div>
-      )}
+      </div>
 
       {/* Map Modal */}
-      <MapModal
-        isOpen={mapOpen}
-        onClose={() => setMapOpen(false)}
-        properties={properties}
-        onSelectProperty={(pg) => {
-          setMapOpen(false);
-          setSelectedPg(pg);
-        }}
-      />
+      {mapOpen && (
+        <MapModal properties={properties} onClose={() => setMapOpen(false)} />
+      )}
 
     </div>
   );
