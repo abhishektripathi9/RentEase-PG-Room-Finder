@@ -27,7 +27,8 @@ const createPriceIcon = (price) => {
   });
 };
 
-export default function MapModal({ properties, onClose }) {
+export default function MapModal({ isOpen, properties, onClose }) {
+  if (!isOpen) return null;
   const center = properties.length > 0 && properties[0].latitude
     ? [parseFloat(properties[0].latitude), parseFloat(properties[0].longitude)]
     : [12.9345, 77.6265];
